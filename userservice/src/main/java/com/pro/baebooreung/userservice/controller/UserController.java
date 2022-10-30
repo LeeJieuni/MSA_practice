@@ -4,6 +4,7 @@ import com.pro.baebooreung.userservice.dto.UserDto;
 import com.pro.baebooreung.userservice.service.UserService;
 import com.pro.baebooreung.userservice.vo.Greeting;
 import com.pro.baebooreung.userservice.vo.RequestUser;
+import com.pro.baebooreung.userservice.vo.ResponseUser;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,25 +28,29 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/welcome")
+    @GetMapping("/user-service/welcome")
     public String welcome(){
 //        return env.getProperty("greeting.message");
         return greeting.getMessage();
     }
 
-    @GetMapping("/health_check")
+    @GetMapping("/user-service/health_check")
     public String status(){
-        return "It's Working in User Service";
+        return String.format("It's Working in User Service on PORT %s", env.getProperty("local.server.port"));
     }
 
-    @PostMapping("/users")
-    public ResponseEntity CreateUser(@RequestBody RequestUser user){
+    @PostMapping("/user-service/users")
+    public ResponseEntity<ResponseUser> CreateUser(@RequestBody RequestUser user){
         //userService로 넘겨주기 위해서는 Requestuser를 dto로 바꿔야함
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         UserDto userDto = mapper.map(user, UserDto.class);
         userService.createUser(userDto);
 
-        return new ResponseEntity(HttpStatus.CREATED);
-        //201 성공코드 반환환    }
+        //반환값 설정정
+       ResponseUser responseUser = mapper.map(userDto, ResponseUser.class);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseUser);
+        //201 성공코드 반환환
+        }
 }
