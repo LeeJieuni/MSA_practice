@@ -43,7 +43,7 @@ public class UserController {
         return String.format("It's Working in User Service on PORT %s", env.getProperty("local.server.port"));
     }
 
-    @PostMapping("/users") //회원가입
+    @PostMapping("/join") //회원가입
     public ResponseEntity<ResponseUser> CreateUser(@RequestBody RequestUser user){
         //userService로 넘겨주기 위해서는 Requestuser를 dto로 바꿔야함
         ModelMapper mapper = new ModelMapper();
@@ -57,7 +57,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(responseUser);
         //201 성공코드 반환환
     }
-    @GetMapping("/users")
+    @GetMapping("/users") //회원정보 얻어오기
     public ResponseEntity<List<ResponseUser>> getUsers() {
         Iterable<UserEntity> userList = userService.getUserByAll();
 

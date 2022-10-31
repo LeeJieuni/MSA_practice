@@ -21,5 +21,11 @@ public class RequestUser {
     @Size(min = 8, message = "Password must be equal or grater than 8 characters")
     private String password;
 
-    //밑에 더 추가되어야 함
+    private String grade; //?
+
+    private String phone;
+
+    private int region;
+
+
 }
