@@ -33,7 +33,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 //        http.authorizeRequests().antMatchers("/health_check/**").permitAll();
         http.authorizeRequests().antMatchers("/**")
 //                .hasIpAddress(env.getProperty("gateway.ip")) // <- IP 변경
-                .hasIpAddress(env.getProperty("")) // <- IP 제한적으로 받을 것
+//                .hasIpAddress(env.getProperty("gateway.ip")) // <- IP 제한적으로 받을 것
+                .access("hasIpAddress('" + env.getProperty("gateway.ip") + "')")
                 .and()
                 .addFilter(getAuthenticationFilter()); //이 필터를 통한 데이터에 한해서만 권한을 부여하고 작업 진행
 
@@ -48,10 +49,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     }
 
     private AuthenticationFilter getAuthenticationFilter() throws Exception {
-//        AuthenticationFilter authenticationFilter =
-//                new AuthenticationFilter(authenticationManager(), userService, env);
-        AuthenticationFilter authenticationFilter = new AuthenticationFilter();
-        authenticationFilter.setAuthenticationManager(authenticationManager());
+        AuthenticationFilter authenticationFilter =
+                new AuthenticationFilter(authenticationManager(), userService, env);
+//        authenticationFilter.setAuthenticationManager(authenticationManager());
 
         return authenticationFilter;
     }
