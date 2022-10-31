@@ -32,9 +32,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 //        http.authorizeRequests().antMatchers("/actuator/**").permitAll();
 //        http.authorizeRequests().antMatchers("/health_check/**").permitAll();
         http.authorizeRequests().antMatchers("/**")
-//                .hasIpAddress(env.getProperty("gateway.ip")) // <- IP 변경
-//                .hasIpAddress(env.getProperty("gateway.ip")) // <- IP 제한적으로 받을 것
-                .access("hasIpAddress('" + env.getProperty("gateway.ip") + "')")
+                .hasIpAddress(env.getProperty("gateway.ip")) // <- IP 제한적으로 받는 것
+//                .access("hasIpAddress('" + env.getProperty("gateway.ip") + "')")
+//                .access("hasIpAddress('127.0.0.1')")
                 .and()
                 .addFilter(getAuthenticationFilter()); //이 필터를 통한 데이터에 한해서만 권한을 부여하고 작업 진행
 
