@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Data
-public class RequestUser {
+public class RequestUser { //회원가입 시 들어오는 정보
     @NotNull(message = "Email cannot be null")
     @Size(min = 2, message = "Email not be less than two characters")
     @Email

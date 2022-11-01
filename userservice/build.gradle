@@ -4,6 +4,11 @@ plugins {
 	id 'java'
 }
 
+bootJar {
+	archivesBaseName = 'UserService'
+	archiveFileName = 'UserService.jar'
+}
+
 group = 'com.pro.baebooreung'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'

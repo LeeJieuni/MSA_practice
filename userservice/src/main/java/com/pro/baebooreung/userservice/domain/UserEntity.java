@@ -24,15 +24,16 @@ public class UserEntity {
     @Column(nullable = false, unique = true)
     private String encryptedPwd; // 암호화된 비밀번호
 
-
     private String profile;
 
-    private AuthType grade;
+    @Enumerated(EnumType.STRING)
+    private Grade grade;
 
     private String phone;
 
     private Integer region;
 
+    @Enumerated(EnumType.STRING)
     private WorkStatus workStatus;
 
     @Column(name = "route_id",nullable = true)

@@ -49,10 +49,12 @@ public class UserController {
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         UserDto userDto = mapper.map(user, UserDto.class);
-        userService.createUser(userDto);
+        System.out.println(userDto.toString());
+        UserDto response = userService.createUser(userDto);
+        System.out.println(response.toString());
 
         //반환값 설정정
-       ResponseUser responseUser = mapper.map(userDto, ResponseUser.class);
+       ResponseUser responseUser = mapper.map(response, ResponseUser.class);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(responseUser);
         //201 성공코드 반환환
